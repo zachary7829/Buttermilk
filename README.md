@@ -2,11 +2,7 @@
 Cool CLI tool to make shortcuts from Text.
 
 # Compatible with:
-Windows
-macOS
-Linux
-Android (If you have an app that compiles C)
-iOS (If you have an app that compiles C)
+Pretty much any device you can compile/execute C for (e.x. Windows, macOS, Linux, Android/iOS with a 3rd party app, etc.)
 
 # Progress:
 HEAVILY WIP. Please don't use.
