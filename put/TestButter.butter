@@ -1,3 +1,4 @@
-SaveFile(AskWhereToSave: 0, Directory: "Cooldir/funny", Overwrite: 1)
-Text(Text: "Cool")
-CreateFolder(FilePath: UltraUpdate/Updated)
+SaveFile()
+GetURL()
+Text()
+CreateFolder()
