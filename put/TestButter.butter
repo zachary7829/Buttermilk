@@ -1,4 +1,9 @@
 SaveFile()
-GetURL()
-Text()
+/* Test */GetURL()
+Text() // Single Line Comment Example
+//Another single line comment Example
 CreateFolder()
+/*
+MultiLine Comment Example
+*/
+GetURL()
