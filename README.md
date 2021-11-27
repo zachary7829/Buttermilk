@@ -114,7 +114,7 @@ With buttermilk, you can use /* to start a multi-line comment, and */ to end it.
 In Buttermilk's current state, you'll need to take the json it outputs and convert it to plist. Keep in mind this will change evetnually. I recommend this website https://wtools.io/convert-json-to-plist. Rename this plist to .shortcut, sign the file, import it and BOOM! You just made a shortcut with Buttermilk!
 
 # What about an app?
-Buttermilk is currently a CLI tool. While I was planning an iOS app as well, I don't know if I really have enough time anymore to make one. If I do eventually free up my schedule for an extended period of time, then you can expect a Buttermilk app. Don't count on it however.
+Buttermilk is currently a CLI tool. While I was planning an app as well, I don't know if I really have enough time anymore to make one. If I do eventually free up my schedule for an extended period of time, then you can expect a Buttermilk app, which will be for pretty much every major platform, ex Windows/macOS/Linux/iOS/Android/Web. Don't count on it however.
 
 # Open Source:
 This project is open source under the GPLv3 license. It also uses a modified version of my SeaJson library, which is open source under the MIT license at https://github.com/zachary7829/SeaJson.
