@@ -6,9 +6,6 @@
 #include <string.h>
 
 char * getstring(char *funckey, char *dict) {
-  if (strlen(funckey) == 0){
-    return "NO INPUT";
-  }
   char funckey1[strlen(funckey)];
   for (size_t i = 0; i < strlen(funckey); i++) {
     // Access each char in the string
@@ -27,6 +24,7 @@ char * getstring(char *funckey, char *dict) {
   int c = 0;
   int keylength = strlen(funckey1);
   char sub[sizeof test + 1];
+  char *returnkey;
   int ignore = 0;
   int instring = 0;
   int tempvar = 0;
@@ -107,18 +105,20 @@ char * getstring(char *funckey, char *dict) {
             c++;
           }
           sub[c] = '\0';
+          returnkey = sub;
           printf("%sIwouldLikeToRemoveThisButForSomeReasonCant", sub); // I have no idea why but getstring() doesn't work correctly if I don't print it, I don't know why, it just doesn't
         }
       };
     }
   }
-  return sub;
+  if (c == 0){
+    return 0;
+  } else {
+    return returnkey;
+  }
 }
 
 char * nonotgetstring(char *funckey, char *dict) {
-  if (strlen(funckey) == 0){
-    return "NO INPUT";
-  }
   char funckey1[strlen(funckey)];
   for (size_t i = 0; i < strlen(funckey); i++) {
     // Access each char in the string
@@ -134,6 +134,7 @@ char * nonotgetstring(char *funckey, char *dict) {
   int c = 0;
   int keylength = strlen(funckey1);
   char sub[sizeof test + 1];
+  char *returnkey;
   int ignore = 0;
   int instring = 0;
   int tempvar = 0;
@@ -182,10 +183,15 @@ char * nonotgetstring(char *funckey, char *dict) {
             c++;
           }
           sub[c] = '\0';
+          returnkey = sub;
           printf("%sIwouldLikeToRemoveThisButForSomeReasonCant", sub); // I have no idea why but getstring() doesn't work correctly if I don't print it, I don't know why, it just doesn't
         }
       };
     }
   }
-  return sub;
+  if (c == 0){
+    return 0;
+  } else {
+    return returnkey;
+  }
 }

@@ -2,8 +2,12 @@ SaveFile()
 /* Test */GetURL()
 Text() // Single Line Comment Example
 //Another single line comment Example
-CreateFolder()
+CreateFolder(@"UltraUpdate/Updated")
+GetURL()
+SetVar()
+Text()
+Alol
 /*
 MultiLine Comment Example
 */
-GetURL()
+SaveFile()
