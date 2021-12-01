@@ -3,11 +3,7 @@
 #include <stdlib.h>
 char * getvalue(char *dict, int occurrence, char *name) {
     //system("clear");
-    int c = 0;
-    int tempint = 0;
-    int charindex = 0;
-    int testt1 = 0;
-    int testt2 = 0;
+    int tempint, testt1, testt2;
     int stringline = 0;
     char *returnkey;
     char dictkey[strlen(dict)];
@@ -16,13 +12,10 @@ char * getvalue(char *dict, int occurrence, char *name) {
       dictkey[i] = dict[i];
     }
     dictkey[strlen(dict)] = '\0';
-    char value[strlen(dictkey)*10];
-    int keylength = strlen(dictkey);
     int occurrenceindex = 1;
     FILE *fp = fopen(name, "r");
     char line[100];
     while (fgets(line, sizeof (line), fp)){
-      charindex = 0;
       tempint = 0;
       if (stringline == 1){
         testt1 = 0;
@@ -40,11 +33,11 @@ char * getvalue(char *dict, int occurrence, char *name) {
             }
             tempint++;
           }
-          while (c < testt2) {
-            value[c] = line[testt1+c];
-            c++;
+          char value[testt2];
+          for (size_t i = 0; i < testt2; i++) {
+            value[i] = line[testt1+i];
           }
-          value[c] = '\0';
+          value[testt2] = '\0';
           returnkey = value;
           return returnkey;
         }
@@ -84,37 +77,17 @@ char * getvalue(char *dict, int occurrence, char *name) {
 int countvalue(char *dict, char *name) {
     //system("clear");
     int c = 0;
-    int tempint = 0;
-    int charindex = 0;
-    int testt1 = 0;
-    int testt2 = 0;
-    int stringline = 0;
-    char *returnkey;
+    int tempint, testt1, testt2;
     char dictkey[strlen(dict)];
     for (size_t i = 0; i < strlen(dict); i++) {
       // Access each char in the string
       dictkey[i] = dict[i];
     }
     dictkey[strlen(dict)] = '\0';
-    char value[strlen(dictkey)*10];
-    int keylength = strlen(dictkey);
-    int occurrence = 0;
-    int occurrenceindex = 1;
     FILE *fp = fopen(name, "r");
     char line[100];
     while (fgets(line, sizeof (line), fp)){
-      charindex = 0;
       tempint = 0;
-      if (stringline == 1){
-        testt1 = 0;
-        testt2 = 0;
-        if (occurrence != occurrenceindex){
-          c++;
-        }
-        occurrenceindex++;
-        tempint = 0;
-        stringline = 0; //when string is found
-      }
       while (tempint < strlen(line)){
         //printf("%c",line[tempint]);
         if (line[tempint] == '>' && line[tempint-1] == 'y' && line[tempint-2] == 'e' && line[tempint-3] == 'k' && line[tempint-4] == '<'){
@@ -128,7 +101,7 @@ int countvalue(char *dict, char *name) {
             testt1++;
           }
           if (testt2 == strlen(dictkey) && testt1 == strlen(dictkey)){
-            stringline++;
+            c++;
             /*
             for(int i = 0; i < testt1; ++i) {
               //printf("%c",line[tempint+i+1]);

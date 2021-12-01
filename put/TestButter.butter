@@ -3,6 +3,7 @@ SaveFile()
 Text() // Single Line Comment Example
 //Another single line comment Example
 CreateFolder(@"UltraUpdate/Updated")
+is.workflow.actions.gettext()
 GetURL()
 SetVar()
 Text()
