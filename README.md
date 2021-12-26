@@ -1,7 +1,7 @@
 # Buttermilk
 Cool CLI tool to make shortcuts from Text.
 
-[![Buttermilk Icon](https://github.com/zachary7829/Buttermilk/blob/main/Icon.png)]
+![Buttermilk Icon](https://github.com/zachary7829/Buttermilk/blob/main/Icon.png)
 
 # Compatible with:
 Buttermilk is coded in 100% C, meaning you can run it on just about any device that can compile and execute C. Windows/macOS/Linux? Of course. iOS/Android? You'll need a third party app to compile it on-device, but yes. Your toaster? If it can compile/run C, likely yes.
