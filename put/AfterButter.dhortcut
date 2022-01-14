@@ -11,6 +11,8 @@
       <dict>
         <key>GroupingIdentifier</key>
         <string>Buttermilk1</string>
+        <key>CoolParameter</key>
+        <integer>99</integer>
       </dict>
     </dict>
     <dict>
@@ -20,6 +22,10 @@
       <dict>
         <key>GroupingIdentifier</key>
         <string>Buttermilk2</string>
+        <key>CoolParameter2</key>
+        <integer>37</integer>
+        <key>CoolText</key>
+        <string>TestingParams</string>
       </dict>
     </dict>
     <dict>
@@ -47,6 +53,8 @@
       <dict>
         <key>GroupingIdentifier</key>
         <string>Buttermilk5</string>
+        <key>CoolText</key>
+        <string>Yay</string>
       </dict>
     </dict>
     <dict>

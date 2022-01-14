@@ -2,7 +2,7 @@ SaveFile()
 /* Test */GetURL()
 Text() // Single Line Comment Example
 //Another single line comment Example
-CreateFolder(@"UltraUpdate/Updated")
+CreateFolder(Directory = UltraUpdate/Updated, Writeable = True)
 is.workflow.actions.gettext()
 GetURL()
 SetVar()

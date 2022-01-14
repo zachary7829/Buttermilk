@@ -1,19 +1,1 @@
 {"is.workflow.actions.hide.app":"HideApp","is.workflow.actions.appendvariable":"AppendVar","is.workflow.actions.alert":"Alert","is.workflow.actions.openin":"OpenIn","is.workflow.actions.filter.photos":"FilterPhotos","is.workflow.actions.date":"Date","is.workflow.actions.setvariable":"SetVar","is.workflow.actions.text.changecase":"ChangeCase","is.workflow.actions.openurl":"OpenURL","is.workflow.actions.runsshscript":"RunSSH","is.workflow.actions.openapp":"OpenApp","is.workflow.actions.setbrightness":"SetBrightness","is.workflow.actions.nothing":"Nothing","is.workflow.actions.getvariable":"GetVar","is.workflow.actions.text.replace":"Replace","is.workflow.actions.makegif":"MakeGIF","is.workflow.actions.documentpicker.save":"SaveFile","is.workflow.actions.print":"Print","is.workflow.actions.flashlight":"Flashlight","is.workflow.actions.getmyworkflows":"GetShortcuts","is.workflow.actions.downloadurl":"GetURL","is.workflow.actions.setclipboard":"SetClipboard","is.workflow.actions.getbatterylevel":"GetBattery","is.workflow.actions.round":"Round","is.workflow.actions.appearance":"SetAppearance","is.workflow.actions.count":"Count","is.workflow.actions.text.match":"Match","is.workflow.actions.runworkflow":"RunShortcuts","is.workflow.actions.base64encode":"Base64","is.workflow.actions.file.createfolder":"CreateFolder","is.workflow.actions.choosefromlist":"ChooseList","is.workflow.actions.ask":"Ask","is.workflow.actions.getitemfromlist":"GetItemFromList","is.workflow.actions.choosefrommenu":"ChooseMenu","is.workflow.actions.text.split":"Split","is.workflow.actions.hash":"Hash","is.workflow.actions.comment":"Comment","is.workflow.actions.text.combine":"Combine","is.workflow.actions.gettext":"Text","is.workflow.actions.list":"List","is.workflow.actions.setvolume":"SetVol","is.workflow.actions.number":"Number","is.workflow.actions.ejectdisk":"EjectDisk","is.workflow.actions.gethtmlfromrichtext":"MakeHTMLFromRTF","is.workflow.actions.returntohomescreen":"Homescreen","is.workflow.actions.speaktext":"SpeakText","is.workflow.actions.splitscreen":"SplitScreen"}}
-
-/*
-<dict>
-  <key>WFWorkflowActionIdentifier</key>
-  <string>is.workflow.actions.file.createfolder</string>
-  <key>WFWorkflowActionParameters</key>
-  <dict>
-	  <key>WFFilePath</key>
-	  <string>UltraUpdate/Updated</string>
-  </dict>
-</dict>
-
-Should become when converting to buttermilk
-
-CreateFolder(FilePath: UltraUpdate/Updated)
-
-  
-*/

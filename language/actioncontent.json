@@ -1,7 +1,1 @@
-{"SaveFile":{"WFAskWhereToSave":"AskWhereToSave","WFFileDestinationPath":"Directory","WFSaveFileOverwrite":"Overwrite"},"SetVar":{"WFVariableName":"VarName"}}
-
-/* 
-Parameters get converted to be easier to understand, e.x. WFAskWhereToSave becomes AskWhereToSave.
-
-
-*/
+{"SaveFile":{"WFAskWhereToSave":"AskWhereToSave","WFFileDestinationPath":"Directory","WriteOn":"Writeable","WFSaveFileOverwrite":"Overwrite"},"SetVar":{"WFVariableName":"VarName"}}
