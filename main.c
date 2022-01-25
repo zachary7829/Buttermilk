@@ -1,5 +1,10 @@
 //Zachary Keffaber / zachary7829, 2021/09/20, Buttermilk
 
+//reminders:
+//check for dot notation in filename entered and in #define
+//dynamically size wfactions and butter
+//in SeaXML make keyindict not always [100]
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -23,6 +28,8 @@ int main(void) {
     return 0;
   }
   if (mode == 1){
+  int isnotint;
+  int ret;
   int charindex2 = 0;
   int charindex, charindex3, c;
   int instring = 0;
@@ -50,6 +57,14 @@ int main(void) {
   fseek(fp, 0, SEEK_SET); // seek back to beginning of file
   char butteractions[size];
   fscanf(fp, "%s", butteractions);
+  fclose(fp);
+
+  fp = fopen("language/ParameterTypes.json", "r");
+  fseek(fp, 0, SEEK_END); // seek to end of file
+  size = ftell(fp); // get current file pointer
+  fseek(fp, 0, SEEK_SET); // seek back to beginning of file
+  char ParameterTypes[size];
+  fscanf(fp, "%s", ParameterTypes);
   fclose(fp);
  
   fp = fopen(filename, "r");
@@ -95,11 +110,159 @@ int main(void) {
       c++;
     }
     params[c] = '\0';
+    //reminder to port the down below code to short2butter
+    ret = strncmp(params, "new", strlen(params));
+    if (strlen(params) == 0){
+      ret = 1;
+    }
+    if (ret == 0){
+      charindex3 += charindex + 1;
+      charindex = 0;
+      while(1){
+        if (nocommentline[charindex+charindex3] == ' ' && charindex > 0){
+          break;
+        } else {
+          if (nocommentline[charindex+charindex3] == ' '){
+            charindex3++;
+          } else {
+            charindex++;
+          }
+        }
+      }
+      char newType[charindex]; //in new ParameterType "WFFileDestinationPath" = "string" this would be ParameterType
+      c = 0;
+      while (c < charindex) {
+        newType[c] = nocommentline[charindex3+c];
+        c++;
+      }
+      newType[c] = '\0';
+      charindex3 += charindex + 1;
+      charindex = 0;
+      while(1){
+        if ((nocommentline[charindex+charindex3] == ' ' || nocommentline[charindex+charindex3] == '\"') && charindex > 0){
+          break;
+        } else {
+          if (nocommentline[charindex+charindex3] == ' ' || nocommentline[charindex+charindex3] == '\"'){
+            charindex3++;
+          } else {
+            charindex++;
+          }
+        }
+      }
+      char newKey[charindex]; //in new ParameterType "WFFileDestinationPath" = "string" this would be WFFileDestinationPath
+      c = 0;
+      while (c < charindex) {
+        newKey[c] = nocommentline[charindex3+c];
+        c++;
+      }
+      newKey[c] = '\0';
+      charindex3 += charindex + 1;
+      charindex = 0;
+      while(1){
+        if ((nocommentline[charindex+charindex3] == ' ' || nocommentline[charindex+charindex3] == '\"' || nocommentline[charindex+charindex3] == '\n') && charindex > 0){
+          break;
+        } else {
+          if (nocommentline[charindex+charindex3] == ' ' || nocommentline[charindex+charindex3] == '\"' || nocommentline[charindex+charindex3] == '='){
+            charindex3++;
+          } else {
+            charindex++;
+          }
+        }
+      }
+      char newValue[charindex]; //in new ParameterType "WFFileDestinationPath" = "string" this would be WFFileDestinationPath
+      c = 0;
+      while (c < charindex) {
+        newValue[c] = nocommentline[charindex3+c];
+        c++;
+      }
+      newValue[c] = '\0';
+      ret = strncmp(newType, "ActionNamesRev", strlen(newType));
+      if (strlen(newType) == 0){
+        ret = 1;
+      }
+      if (ret == 0){
+        charindex = strlen(butternames);
+        charindex3 = 0;
+        while (butternames[strlen(butternames)-charindex3] != '}'){
+          charindex3++;
+        }
+        butternames[strlen(butternames)-charindex3] = '\0'; //null out }
+        strcat(butternames,",\"");
+        strcat(butternames,newKey);
+        strcat(butternames,"\":\"");
+        strcat(butternames,newValue);
+        strcat(butternames,"\"}");
+        butternames[strlen(butternames)] = '\0';
+      }
+      ret = strncmp(newType, "ActionContentRev", strlen(newType));
+      if (strlen(newType) == 0){
+        ret = 1;
+      }
+      if (ret == 0){
+        charindex = strlen(butteractions);
+        charindex3 = 0;
+        while (butteractions[strlen(butteractions)-charindex3] != '}'){
+          charindex3++;
+        }
+        butteractions[strlen(butteractions)-charindex3] = '\0'; //null out }
+        strcat(butteractions,",\"");
+        strcat(butteractions,newKey);
+        strcat(butteractions,"\":\"");
+        strcat(butteractions,newValue);
+        strcat(butteractions,"\"}");
+        butteractions[strlen(butteractions)] = '\0';
+      }
+      ret = strncmp(newType, "ParameterTypes", strlen(newType));
+      if (strlen(newType) == 0){
+        ret = 1;
+      }
+      if (ret == 0){
+        charindex = strlen(ParameterTypes);
+        charindex3 = 0;
+        while (ParameterTypes[strlen(ParameterTypes)-charindex3] != '}'){
+          charindex3++;
+        }
+        ParameterTypes[strlen(ParameterTypes)-charindex3] = '\0'; //null out }
+        strcat(ParameterTypes,",\"");
+        strcat(ParameterTypes,newKey);
+        strcat(ParameterTypes,"\":\"");
+        strcat(ParameterTypes,newValue);
+        strcat(ParameterTypes,"\"}");
+        ParameterTypes[strlen(ParameterTypes)] = '\0';
+      }
+      //newValue[c] = '\0';
+      //}
+      //printf("\n\nnew parsing: %s %s %s %s %lu\n\n",params, newType, newKey, newValue, strlen(params));
+      //reminder to change later to instead of getting last character to instead get last }
+      //new ParameterType "WFFileDestinationPath" = "string"
+      //new actionnamesrev "GetURL" = "is.workflow.actions.downloadurl"
+    }
+    ret = strncmp(params, "#define", strlen(params));
+    if (strlen(params) == 0){
+      ret = 1;
+    }
+    if (ret == 0){
+      //#define "language/ParameterTypes.json" = "{"WFFileDestinationPath":"string"}"
+    }
+    ret = strncmp(params, "if", strlen(params));
+    if (strlen(params) == 0){
+      ret = 1;
+    }
+    if (ret == 0){
+      //smart ifs
+    }
+    ret = strncmp(params, "var", strlen(params));
+    if (strlen(params) == 0){
+      ret = 1;
+    }
+    if (ret == 0){
+      //smart vars
+    }
     /*
     memcpy(params,&nocommentline[charindex3],charindex);
     params[charindex] = '\0';
     */
-    if (!(strchr(nocommentline, '.'))) {
+    if (!(strchr(params, '.'))) {
       actionid = nonotgetstring(params,butternames);
     } else {
       actionid = params;
@@ -129,10 +292,31 @@ int main(void) {
         printf("\na%s\n",butterparams);
         printf("\na%s\n",nonotgetstring(butterparams,butteractions));
         strcat(wfactions,butterparams);
-        strcat(wfactions,"</key>\n        <string>");
+        /*
+        for(int i = 0;i < (strlen(str) - 1);i++) {
+		      if((int)str[i] < 10) {
+			      return true;
+		      } else {
+			      return false;
+		      }
+	      }
+        */
+        ret = strncmp(nonotgetstring(butterparams,ParameterTypes),"string",strlen(nonotgetstring(butterparams,ParameterTypes)));
+        if (ret == 0){
+          strcat(wfactions,"</key>\n        <string>");
+        }
+        isnotint = strncmp(nonotgetstring(butterparams,ParameterTypes),"integer",strlen(nonotgetstring(butterparams,ParameterTypes)));
+        if (isnotint == 0){
+          strcat(wfactions,"</key>\n        <integer>");
+        }
         strcat(wfactions,butterparam(nocommentline, 1, butterparamindex));
         printf("\n\nCountButterParam: %d\nButterParamIndex: %d\n",countbutterparam,butterparamindex);
-        strcat(wfactions,"</string>\n");
+        //deadpos
+        if (isnotint == 0){
+          strcat(wfactions,"</integer>\n");
+        } else {
+          strcat(wfactions,"</string>\n");
+        }
         butterparamindex++;
         }
       }
