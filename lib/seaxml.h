@@ -1,3 +1,5 @@
+//Zachary Keffaber / zachary7829, 2021/11/29, SeaXML
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -22,7 +24,15 @@ char * getvalue(char *dict, int occurrence, char *name) {
         testt2 = 0;
         if (occurrence == occurrenceindex){
           while (tempint < strlen(line)){
-            if ((line[tempint] == '>' && line[tempint-1] == 'g' && line[tempint-2] == 'n' && line[tempint-3] == 'i' && line[tempint-4] == 'r' && line[tempint-5] == 't' && line[tempint-6] == 's' && line[tempint-7] == '<') || (line[tempint] == '>' && line[tempint-1] == 'r' && line[tempint-2] == 'e' && line[tempint-3] == 'g' && line[tempint-4] == 'e' && line[tempint-5] == 't' && line[tempint-6] == 'n' && line[tempint-7] == 'i' && line[tempint-8] == '<')){
+            if ((line[tempint] == '>' && line[tempint-1] == 'g' && line[tempint-2] == 'n' && line[tempint-3] == 'i' && line[tempint-4] == 'r' && line[tempint-5] == 't' && line[tempint-6] == 's' && line[tempint-7] == '<') || (line[tempint] == '>' && line[tempint-1] == 'r' && line[tempint-2] == 'e' && line[tempint-3] == 'g' && line[tempint-4] == 'e' && line[tempint-5] == 't' && line[tempint-6] == 'n' && line[tempint-7] == 'i' && line[tempint-8] == '<') || (line[tempint] == '>' && line[tempint-1] == '/' && line[tempint-2] == 'e' && line[tempint-3] == 'u' && line[tempint-4] == 'r' && line[tempint-5] == 't' && line[tempint-6] == '<') || (line[tempint] == '>' && line[tempint-1] == '/' && line[tempint-2] == 'e' && line[tempint-3] == 's' && line[tempint-4] == 'l' && line[tempint-5] == 'a' && line[tempint-6] == 'f' && line[tempint-7] == '<')){
+              if (line[tempint] == '>' && line[tempint-1] == '/' && line[tempint-2] == 'e' && line[tempint-3] == 'u' && line[tempint-4] == 'r' && line[tempint-5] == 't' && line[tempint-6] == '<'){
+                testt1 = tempint - 6;
+                testt2 = tempint;
+            } else {
+              if (line[tempint] == '>' && line[tempint-1] == '/' && line[tempint-2] == 'e' && line[tempint-3] == 's' && line[tempint-4] == 'l' && line[tempint-5] == 'a' && line[tempint-6] == 'f' && line[tempint-7] == '<') {
+                testt1 = tempint - 7;
+                testt2 = tempint;
+              } else {
               testt1 = tempint+1;
               //reminder to not just check for < but for </string> in the future
               while (line[testt1+testt2] != '<' && testt2 < strlen(line) - testt1){
@@ -30,6 +40,8 @@ char * getvalue(char *dict, int occurrence, char *name) {
                 testt2++;
               }
               //ok
+                }
+              }
             }
             tempint++;
           }
@@ -62,7 +74,7 @@ char * getvalue(char *dict, int occurrence, char *name) {
             /*
             for(int i = 0; i < testt1; ++i) {
               //printf("%c",line[tempint+i+1]);
-            } 
+            }
             */
           }
         }
@@ -105,7 +117,7 @@ int countvalue(char *dict, char *name) {
             /*
             for(int i = 0; i < testt1; ++i) {
               //printf("%c",line[tempint+i+1]);
-            } 
+            }
             */
           }
         }
@@ -201,7 +213,7 @@ char *getdict(char *dict, int occurrence, char *name, int occurrence2) {
             /*
             for(int i = 0; i < testt1; ++i) {
               //printf("%c",line[tempint+i+1]);
-            } 
+            }
             */
           }
         }
@@ -283,7 +295,15 @@ char *getdictkeyvalue(char *dict, int occurrence, char *name, int occurrence2, c
             if (line[tempint] == '>' && line[tempint-1] == 't' && line[tempint-2] == 'c' && line[tempint-3] == 'i' && line[tempint-4] == 'd' && line[tempint-5] == '<'){
               dictionarypromotion++;
             }
-            if ((line[tempint] == '>' && line[tempint-1] == 'g' && line[tempint-2] == 'n' && line[tempint-3] == 'i' && line[tempint-4] == 'r' && line[tempint-5] == 't' && line[tempint-6] == 's' && line[tempint-7] == '<') || (line[tempint] == '>' && line[tempint-1] == 'r' && line[tempint-2] == 'e' && line[tempint-3] == 'g' && line[tempint-4] == 'e' && line[tempint-5] == 't' && line[tempint-6] == 'n' && line[tempint-7] == 'i' && line[tempint-8] == '<')){
+            if ((line[tempint] == '>' && line[tempint-1] == 'g' && line[tempint-2] == 'n' && line[tempint-3] == 'i' && line[tempint-4] == 'r' && line[tempint-5] == 't' && line[tempint-6] == 's' && line[tempint-7] == '<') || (line[tempint] == '>' && line[tempint-1] == 'r' && line[tempint-2] == 'e' && line[tempint-3] == 'g' && line[tempint-4] == 'e' && line[tempint-5] == 't' && line[tempint-6] == 'n' && line[tempint-7] == 'i' && line[tempint-8] == '<') || (line[tempint] == '>' && line[tempint-1] == '/' && line[tempint-2] == 'e' && line[tempint-3] == 'u' && line[tempint-4] == 'r' && line[tempint-5] == 't' && line[tempint-6] == '<') || (line[tempint] == '>' && line[tempint-1] == '/' && line[tempint-2] == 'e' && line[tempint-3] == 's' && line[tempint-4] == 'l' && line[tempint-5] == 'a' && line[tempint-6] == 'f' && line[tempint-7] == '<')){
+              if (line[tempint] == '>' && line[tempint-1] == '/' && line[tempint-2] == 'e' && line[tempint-3] == 'u' && line[tempint-4] == 'r' && line[tempint-5] == 't' && line[tempint-6] == '<'){
+                testt1 = tempint - 6;
+                testt2 = tempint;
+            } else {
+              if (line[tempint] == '>' && line[tempint-1] == '/' && line[tempint-2] == 'e' && line[tempint-3] == 's' && line[tempint-4] == 'l' && line[tempint-5] == 'a' && line[tempint-6] == 'f' && line[tempint-7] == '<') {
+                testt1 = tempint - 7;
+                testt2 = tempint;
+              } else {
               testt1 = tempint+1;
               //reminder to not just check for < but for </string> in the future
               while (line[testt1+testt2] != '<' && testt2 < strlen(line) - testt1){
@@ -291,6 +311,8 @@ char *getdictkeyvalue(char *dict, int occurrence, char *name, int occurrence2, c
                 testt2++;
               }
               //ok
+                }
+              }
             }
             tempint++;
             }
@@ -327,7 +349,7 @@ char *getdictkeyvalue(char *dict, int occurrence, char *name, int occurrence2, c
             /*
             for(int i = 0; i < testt1; ++i) {
               //printf("%c",line[tempint+i+1]);
-            } 
+            }
             */
           }
         }

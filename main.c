@@ -12,21 +12,9 @@
 #include "lib/seaxml.h"
 #include "parsebutterparams.h"
 
-int main(void) {
-  int mode;
-  printf("Press 1 to convert from butter to shortcut, Press 2 to convert from shortcut to butter: ");
-  scanf("%d",&mode);
-  char filename[100];
-  printf("Enter in the file directory+name: "); // put/TestButter.butter
-  scanf("%s",filename);
-  
-  FILE *fp;
-  if ((fp = fopen(filename, "r"))){
-    fclose(fp); //file exists
-  } else {
-    printf("\nCannot find file in specified filepath.\n");
-    return 0;
-  }
+char *buttermilk(int mode, char *text) {
+  char *returnkey;
+
   if (mode == 1){
   int isnotint;
   int ret;
@@ -40,36 +28,37 @@ int main(void) {
   int butterparamindex = 1;
   char *butterparams = "Value";
   char tmpstring[100];
+  char tmpstring2;
   char nocommentline[100];
+  int buttermilklinecount = 1;
+  signed int textpos = -1;
+  int textpossave = 0;
   char wfactions[10000] = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">\n<plist version=\"1.0\">\n<dict>\n  <key>WFWorkflowActions</key>\n  <array>\n";
 
-  fp = fopen("language/actionnamesrev.json", "r");
-  fseek(fp, 0, SEEK_END); // seek to end of file
-  int size = ftell(fp); // get current file pointer
-  fseek(fp, 0, SEEK_SET); // seek back to beginning of file
-  char butternames[size];
-  fscanf(fp, "%s", butternames);
-  fclose(fp);
+char butternames[2369] = "{\"OpenApp\":\"is.workflow.actions.openapp\",\"GetURL\":\"is.workflow.actions.downloadurl\",\"Alert\":\"is.workflow.actions.alert\",\"Ask\":\"is.workflow.actions.ask\",\"CreateFolder\":\"is.workflow.actions.file.createfolder\",\"FilterPhotos\":\"is.workflow.actions.filter.photos\",\"Count\":\"is.workflow.actions.count\",\"Print\":\"is.workflow.actions.print\",\"GetItemFromList\":\"is.workflow.actions.getitemfromlist\",\"Comment\":\"is.workflow.actions.comment\",\"Number\":\"is.workflow.actions.number\",\"SaveFile\":\"is.workflow.actions.documentpicker.save\",\"SetVol\":\"is.workflow.actions.setvolume\",\"Date\":\"is.workflow.actions.date\",\"Flashlight\":\"is.workflow.actions.flashlight\",\"List\":\"is.workflow.actions.list\",\"RunSSH\":\"is.workflow.actions.runsshscript\",\"OpenURL\":\"is.workflow.actions.openurl\",\"GetBattery\":\"is.workflow.actions.getbatterylevel\",\"Nothing\":\"is.workflow.actions.nothing\",\"Text\":\"is.workflow.actions.gettext\",\"MakeGIF\":\"is.workflow.actions.makegif\",\"GetVar\":\"is.workflow.actions.getvariable\",\"OpenIn\":\"is.workflow.actions.openin\",\"SetVar\":\"is.workflow.actions.setvariable\",\"SetAppearance\":\"is.workflow.actions.appearance\",\"ChooseList\":\"is.workflow.actions.choosefromlist\",\"ChooseMenu\":\"is.workflow.actions.choosefrommenu\",\"Base64\":\"is.workflow.actions.base64encode\",\"AppendVar\":\"is.workflow.actions.appendvariable\",\"Hash\":\"is.workflow.actions.hash\",\"HideApp\":\"is.workflow.actions.hide.app\",\"GetShortcuts\":\"is.workflow.actions.getmyworkflows\",\"RunShortcuts\":\"is.workflow.actions.runworkflow\",\"Round\":\"is.workflow.actions.round\",\"Replace\":\"is.workflow.actions.text.replace\",\"Split\":\"is.workflow.actions.text.split\",\"Match\":\"is.workflow.actions.text.match\",\"Combine\":\"is.workflow.actions.text.combine\",\"ChangeCase\":\"is.workflow.actions.text.changecase\",\"SetBrightness\":\"is.workflow.actions.setbrightness\",\"SetClipboard\":\"is.workflow.actions.setclipboard\",\"EjectDisk\":\"is.workflow.actions.ejectdisk\",\"MakeHTMLFromRTF\":\"is.workflow.actions.gethtmlfromrichtext\",\"Homescreen\":\"is.workflow.actions.returntohomescreen\",\"SpeakText\":\"is.workflow.actions.speaktext\",\"SplitScreen\":\"is.workflow.actions.splitscreen\"}";
 
-  fp = fopen("language/actioncontentrev.json", "r");
-  fseek(fp, 0, SEEK_END); // seek to end of file
-  size = ftell(fp); // get current file pointer
-  fseek(fp, 0, SEEK_SET); // seek back to beginning of file
-  char butteractions[size];
-  fscanf(fp, "%s", butteractions);
-  fclose(fp);
+    char butteractions[158] = "{\"SaveFile\":{\"AskWhereToSave\":\"WFAskWhereToSave\",\"Directory\":\"WFFileDestinationPath\",\"Overwrite\":\"WFSaveFileOverwrite\"},\"SetVar\":{\"VarName\":\"WFVariableName\"}}";
 
-  fp = fopen("language/ParameterTypes.json", "r");
-  fseek(fp, 0, SEEK_END); // seek to end of file
-  size = ftell(fp); // get current file pointer
-  fseek(fp, 0, SEEK_SET); // seek back to beginning of file
-  char ParameterTypes[size];
-  fscanf(fp, "%s", ParameterTypes);
-  fclose(fp);
+    char ParameterTypes[54] = "{\"WFFileDestinationPath\":\"string\",\"WriteOn\":\"integer\"}";
  
-  fp = fopen(filename, "r");
-  char line[100];
-  while (fgets(line, sizeof (line), fp)){
+  char line[strlen(text)];
+    for (unsigned int i = 0; i < strlen(text); i++) {
+      // Access each char in the string
+      if (text[i] == '\n'){
+        buttermilklinecount++;
+      }
+    }
+      printf("\nButtermilk Line Count: %d\n",buttermilklinecount);
+    for (unsigned int i = 0; i < buttermilklinecount; i++) {
+      textpos++;
+      while (text[textpos] != '\n' && text[textpos] != '\0'){
+        textpos++;
+      }
+      for (unsigned int i = 0; i < textpos; i++) {
+        line[i] = text[i+textpossave];
+      }
+      line[textpos] = '\0';
+      textpossave = textpos + 1;
     charindex = 0;
     charindex3 = 0;
     while (charindex < strlen(line)){
@@ -187,11 +176,11 @@ int main(void) {
           charindex3++;
         }
         butternames[strlen(butternames)-charindex3] = '\0'; //null out }
-        strcat(butternames,",\"");
-        strcat(butternames,newKey);
-        strcat(butternames,"\":\"");
-        strcat(butternames,newValue);
-        strcat(butternames,"\"}");
+        strncat(butternames,",\"",2);
+        strncat(butternames,newKey,strlen(newKey));
+        strncat(butternames,"\":\"",3);
+        strncat(butternames,newValue,strlen(newValue));
+        strncat(butternames,"\"}",2);
         butternames[strlen(butternames)] = '\0';
       }
       ret = strncmp(newType, "ActionContentRev", strlen(newType));
@@ -205,11 +194,11 @@ int main(void) {
           charindex3++;
         }
         butteractions[strlen(butteractions)-charindex3] = '\0'; //null out }
-        strcat(butteractions,",\"");
-        strcat(butteractions,newKey);
-        strcat(butteractions,"\":\"");
-        strcat(butteractions,newValue);
-        strcat(butteractions,"\"}");
+        strncat(butteractions,",\"",2);
+        strncat(butteractions,newKey,strlen(newKey));
+        strncat(butteractions,"\":\"",3);
+        strncat(butteractions,newValue,strlen(newValue));
+        strncat(butteractions,"\"}",2);
         butteractions[strlen(butteractions)] = '\0';
       }
       ret = strncmp(newType, "ParameterTypes", strlen(newType));
@@ -223,11 +212,11 @@ int main(void) {
           charindex3++;
         }
         ParameterTypes[strlen(ParameterTypes)-charindex3] = '\0'; //null out }
-        strcat(ParameterTypes,",\"");
-        strcat(ParameterTypes,newKey);
-        strcat(ParameterTypes,"\":\"");
-        strcat(ParameterTypes,newValue);
-        strcat(ParameterTypes,"\"}");
+        strncat(ParameterTypes,",\"",2);
+        strncat(ParameterTypes,newKey,strlen(newKey));
+        strncat(ParameterTypes,"\":\"",3);
+        strncat(ParameterTypes,newValue,strlen(newValue));
+        strncat(ParameterTypes,"\"}",2);
         ParameterTypes[strlen(ParameterTypes)] = '\0';
       }
       //newValue[c] = '\0';
@@ -242,7 +231,77 @@ int main(void) {
       ret = 1;
     }
     if (ret == 0){
-      //#define "language/ParameterTypes.json" = "{"WFFileDestinationPath":"string"}"
+      //#define ParameterType = "{}"
+      charindex3 += charindex + 1;
+      charindex = 0;
+      while(1){
+        if ((nocommentline[charindex+charindex3] == ' ' || nocommentline[charindex+charindex3] == '\"') && charindex > 0){
+          break;
+        } else {
+          if (nocommentline[charindex+charindex3] == ' ' || nocommentline[charindex+charindex3] == '\"'){
+            charindex3++;
+          } else {
+            charindex++;
+          }
+        }
+      }
+      char newType[charindex]; //in new ParameterType "WFFileDestinationPath" = "string" this would be WFFileDestinationPath
+      c = 0;
+      while (c < charindex) {
+        newType[c] = nocommentline[charindex3+c];
+        c++;
+      }
+      newType[c] = '\0';
+      charindex3 += charindex + 1;
+      charindex = 0;
+      while(1){
+        if ((nocommentline[charindex+charindex3] == ' ' || nocommentline[charindex+charindex3] == '\n') && charindex > 0){
+          break;
+        } else {
+          if (nocommentline[charindex+charindex3] == ' ' || nocommentline[charindex+charindex3] == '='){
+            charindex3++;
+          } else {
+            charindex++;
+          }
+        }
+      }
+      char newValue[charindex]; //in new ParameterType "WFFileDestinationPath" = "string" this would be WFFileDestinationPath
+      c = 0;
+      while (c < charindex) {
+        newValue[c] = nocommentline[charindex3+c];
+        c++;
+      }
+      newValue[c] = '\0';
+      //ported from new
+      ret = strncmp(newType, "ActionNamesRev", strlen(newType));
+      if (strlen(newType) == 0){
+        ret = 1;
+      }
+      if (ret == 0){
+        strncpy(butternames, newValue, strlen(newValue));
+      }
+      ret = strncmp(newType, "ActionContentRev", strlen(newType));
+      if (strlen(newType) == 0){
+        ret = 1;
+      }
+      if (ret == 0){
+        strncpy(butteractions, newValue, strlen(newValue));
+      }
+      ret = strncmp(newType, "ParameterTypes", strlen(newType));
+      if (strlen(newType) == 0){
+        ret = 1;
+      }
+      if (ret == 0){
+        strncpy(ParameterTypes, newValue, strlen(newValue));
+      }
+      //#define ParameterTypes = "{"WFFileDestinationPath":"string"}"
+    }
+    ret = strncmp(params, "#blink", strlen(params));
+    if (strlen(params) == 0){
+      ret = 1;
+    }
+    if (ret == 0){
+      //#blink "put/extbutter.butter"
     }
     ret = strncmp(params, "if", strlen(params));
     if (strlen(params) == 0){
@@ -270,12 +329,14 @@ int main(void) {
     if (!(actionid == NULL)){
       charindex2++;
       printf("\n\n");
-      strcat(wfactions,"    <dict>\n      <key>WFWorkflowActionIdentifier</key>\n      <string>");
-      strcat(wfactions,actionid);
-      strcat(wfactions,"</string>\n      <key>WFWorkflowActionParameters</key>\n      <dict>\n        <key>GroupingIdentifier</key>\n        <string>Buttermilk");
-      sprintf(tmpstring, "%d", charindex2);
-      strcat(wfactions,tmpstring);
-      strcat(wfactions,"</string>\n");
+      strncat(wfactions,"    <dict>\n      <key>WFWorkflowActionIdentifier</key>\n      <string>",69);
+      strncat(wfactions,actionid,strlen(actionid));
+      strncat(wfactions,"</string>\n      <key>WFWorkflowActionParameters</key>\n      <dict>\n        <key>GroupingIdentifier</key>\n        <string>Buttermilk",131);
+      char tmpstring3[sizeof(charindex2)*3+2] = "NULL";
+      snprintf(tmpstring3, sizeof tmpstring3, "%d", charindex2);
+      //sprintf(tmpstring, "%d", charindex2); (The number actfer Buttermilk in GroupingIdentifier)
+      strncat(wfactions,tmpstring3,strlen(tmpstring3));
+      strncat(wfactions,"</string>\n",10);
       if(!(strlen(butterparam(nocommentline, 0, 1))<1)){
         countbutterparam = 1;
         while (strlen(butterparams) != 0){
@@ -285,48 +346,51 @@ int main(void) {
         countbutterparam -= 1;
         butterparamindex = 1;
         while (butterparamindex < countbutterparam+1){
-        strcat(wfactions,"        <key>");
+        strncat(wfactions,"        <key>",13);
         printf("\nStartLoop\nButterParamIndex: %d\nNoCommentLine: %s\n",butterparamindex,nocommentline);
         butterparams = butterparam(nocommentline, 0, butterparamindex);
         butterparams = nonotgetstring(butterparams,butteractions);
         printf("\na%s\n",butterparams);
         printf("\na%s\n",nonotgetstring(butterparams,butteractions));
-        strcat(wfactions,butterparams);
+        strncat(wfactions,butterparams,strlen(butterparams));
         /*
         for(int i = 0;i < (strlen(str) - 1);i++) {
-		      if((int)str[i] < 10) {
-			      return true;
-		      } else {
-			      return false;
-		      }
-	      }
+              if((int)str[i] < 10) {
+                  return true;
+              } else {
+                  return false;
+              }
+          }
         */
         ret = strncmp(nonotgetstring(butterparams,ParameterTypes),"string",strlen(nonotgetstring(butterparams,ParameterTypes)));
         if (ret == 0){
-          strcat(wfactions,"</key>\n        <string>");
+          strncat(wfactions,"</key>\n        <string>",23);
         }
         isnotint = strncmp(nonotgetstring(butterparams,ParameterTypes),"integer",strlen(nonotgetstring(butterparams,ParameterTypes)));
         if (isnotint == 0){
-          strcat(wfactions,"</key>\n        <integer>");
+          strncat(wfactions,"</key>\n        <integer>",24);
         }
-        strcat(wfactions,butterparam(nocommentline, 1, butterparamindex));
+        strncat(wfactions,butterparam(nocommentline, 1, butterparamindex),strlen(butterparam(nocommentline, 1, butterparamindex)));
         printf("\n\nCountButterParam: %d\nButterParamIndex: %d\n",countbutterparam,butterparamindex);
         //deadpos
         if (isnotint == 0){
-          strcat(wfactions,"</integer>\n");
+          strncat(wfactions,"</integer>\n",11);
         } else {
-          strcat(wfactions,"</string>\n");
+          strncat(wfactions,"</string>\n",10);
         }
         butterparamindex++;
         }
       }
-      strcat(wfactions,"      </dict>\n    </dict>\n");
+      strncat(wfactions,"      </dict>\n    </dict>\n",26);
     }
   }
-  strcat(wfactions,"  </array>\n</dict>\n</plist>");
-  fclose(fp);
-  system("clear");
-  printf("\b\b\b\b\b\b\bstupid memory bug\n\n\n%s",wfactions);
+  strncat(wfactions,"  </array>\n</dict>\n</plist>",28);
+  //fclose(fp);
+  //system("clear");
+    printf("%s",wfactions); // the bug has been better fixed and it's location to be determined to be sprintf (now snprintf). however it still appears to append @ to the beginning...
+    returnkey = wfactions;
+  printf("%sIwouldliketoremovethisbutIcant",returnkey);
+  return returnkey;
   } else {
     int actionindex = 1;
     int actionparametercount = 1;
@@ -334,54 +398,50 @@ int main(void) {
     char *currentactionparam = "Value";
     char *actionparam;
     char butter[10000] = "//Buttermilk\n";
-    int actionlist = countvalue("WFWorkflowActionIdentifier", filename);
+    int actionlist = countvalue("WFWorkflowActionIdentifier", text);
     char * butteraction;
-    fp = fopen("language/actionnames.json", "r");
-    fseek(fp, 0, SEEK_END); // seek to end of file
-    int size = ftell(fp); // get current file pointer
-    fseek(fp, 0, SEEK_SET); // seek back to beginning of file
-    char butternames[size];
-    fscanf(fp, "%s", butternames);
-    fclose(fp);
+    char butternames[2080] = "{\"is.workflow.actions.hide.app\":\"HideApp\",\"is.workflow.actions.appendvariable\":\"AppendVar\",\"is.workflow.actions.alert\":\"Alert\",\"is.workflow.actions.openin\":\"OpenIn\",\"is.workflow.actions.filter.photos\":\"FilterPhotos\",\"is.workflow.actions.date\":\"Date\",\"is.workflow.actions.setvariable\":\"SetVar\",\"is.workflow.actions.text.changecase\":\"ChangeCase\",\"is.workflow.actions.openurl\":\"OpenURL\",\"is.workflow.actions.runsshscript\":\"RunSSH\",\"is.workflow.actions.openapp\":\"OpenApp\",\"is.workflow.actions.setbrightness\":\"SetBrightness\",\"is.workflow.actions.nothing\":\"Nothing\",\"is.workflow.actions.getvariable\":\"GetVar\",\"is.workflow.actions.text.replace\":\"Replace\",\"is.workflow.actions.makegif\":\"MakeGIF\",\"is.workflow.actions.documentpicker.save\":\"SaveFile\",\"is.workflow.actions.print\":\"Print\",\"is.workflow.actions.flashlight\":\"Flashlight\",\"is.workflow.actions.getmyworkflows\":\"GetShortcuts\",\"is.workflow.actions.downloadurl\":\"GetURL\",\"is.workflow.actions.setclipboard\":\"SetClipboard\",\"is.workflow.actions.getbatterylevel\":\"GetBattery\",\"is.workflow.actions.round\":\"Round\",\"is.workflow.actions.appearance\":\"SetAppearance\",\"is.workflow.actions.count\":\"Count\",\"is.workflow.actions.text.match\":\"Match\",\"is.workflow.actions.runworkflow\":\"RunShortcuts\",\"is.workflow.actions.base64encode\":\"Base64\",\"is.workflow.actions.file.createfolder\":\"CreateFolder\",\"is.workflow.actions.choosefromlist\":\"ChooseList\",\"is.workflow.actions.ask\":\"Ask\",\"is.workflow.actions.getitemfromlist\":\"GetItemFromList\",\"is.workflow.actions.choosefrommenu\":\"ChooseMenu\",\"is.workflow.actions.text.split\":\"Split\",\"is.workflow.actions.hash\":\"Hash\",\"is.workflow.actions.comment\":\"Comment\",\"is.workflow.actions.text.combine\":\"Combine\",\"is.workflow.actions.gettext\":\"Text\",\"is.workflow.actions.list\":\"List\",\"is.workflow.actions.setvolume\":\"SetVol\",\"is.workflow.actions.number\":\"Number\",\"is.workflow.actions.ejectdisk\":\"EjectDisk\",\"is.workflow.actions.gethtmlfromrichtext\":\"MakeHTMLFromRTF\",\"is.workflow.actions.returntohomescreen\":\"Homescreen\",\"is.workflow.actions.speaktext\":\"SpeakText\",\"is.workflow.actions.splitscreen\":\"SplitScreen\"}}";
 
     while(actionindex < actionlist+1) {
-    butteraction = nonotgetstring((getvalue("WFWorkflowActionIdentifier",actionindex, filename)),butternames);
+    butteraction = nonotgetstring((getvalue("WFWorkflowActionIdentifier",actionindex, text)),butternames);
     if (!(butteraction)){
-      butteraction = getvalue("WFWorkflowActionIdentifier",actionindex, filename);
+      butteraction = getvalue("WFWorkflowActionIdentifier",actionindex, text);
     }
-    strcat(butteraction,"(");
+    strncat(butteraction,"(",1);
     actionparametercount = 1;
     currentactionparam = "Value";
     while (currentactionparam != NULL){
-      currentactionparam = getdict("WFWorkflowActionParameters", actionindex, filename, actionparametercount);
+      currentactionparam = getdict("WFWorkflowActionParameters", actionindex, text, actionparametercount);
       actionparametercount++;
     }
     actionparametercount -= 2;
     actionparamindex = 1;
     while(actionparamindex < actionparametercount+1)
     {
-    actionparam = getdict("WFWorkflowActionParameters", actionindex, filename, actionparamindex);
-    strcat(butteraction,actionparam);
-    strcat(butteraction," = ");
+    actionparam = getdict("WFWorkflowActionParameters", actionindex, text, actionparamindex);
+    strncat(butteraction,actionparam,strlen(actionparam));
+    strncat(butteraction," = ",3);
     char tmpactionparam[strlen(actionparam)];
     for (unsigned int i = 0; i < strlen(actionparam); i++){
       tmpactionparam[i] = actionparam[i];
     }
     tmpactionparam[strlen(actionparam)] = '\0';
-    strcat(butteraction,getdictkeyvalue("WFWorkflowActionParameters", actionindex, filename, actionparamindex, tmpactionparam)); //error with this one
+    strcat(butteraction,getdictkeyvalue("WFWorkflowActionParameters", actionindex, text, actionparamindex, tmpactionparam)); //error with this one
     actionparamindex++;
     if (actionparamindex < actionparametercount+1){
-      strcat(butteraction,", ");
+      strncat(butteraction,", ",2);
     }
     }
-    strcat(butteraction,")\n");
-    strcat(butter,butteraction);
+    strncat(butteraction,")\n",2);
+    strncat(butter,butteraction,strlen(butteraction));
     printf("\n\n%s",butteraction);
     actionindex++;
     }
-    fclose(fp);
-    system("clear");
+    //fclose(fp);
+    //system("clear");
     printf("%s",butter);
+    returnkey = butter;
+    return returnkey;
   }
   return 0;
 }

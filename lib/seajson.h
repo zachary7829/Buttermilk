@@ -1,4 +1,4 @@
-//Zachary Keffaber / zachary7829, 2021/10/12, SeaJson 
+//Zachary Keffaber / zachary7829, 2021/10/12, SeaJson
 
 //NOTE: This code is *really* bad, please use something else
 
